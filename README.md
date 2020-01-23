@@ -31,7 +31,7 @@ This issues happens with both most used sinks
 | [Serilog Sink for AWS CloudWatch](https://github.com/Cimpress-MCP/serilog-sinks-awscloudwatch) |  Serilog.Cimpress |
 | [Serilog Sink for AWS CloudWatch - Custom Sink](https://github.com/Cimpress-MCP/serilog-sinks-awscloudwatch) |  Serilog.Cimpress.Custom |
 
-It looks like what goes in background processing is not executed.
+It looks like what goes in background processing is not completely executed.
 
 The following code proves that *PeriodicBatching* is not working on AWS Lambda, the SelfLog does not log at every second so this might explain why some messages are not sent.
 
