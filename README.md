@@ -60,6 +60,17 @@ The following code proves that *PeriodicBatching* is not working on AWS Lambda, 
         }
     }
 ```
+So for example this is the output on a local machine
+
+![Console](https://raw.githubusercontent.com/adrianiftode/SerilogSinksCloudWatchIssue/master/_images/console.JPG)
+
+But if you open the Monitoring section from AWS Lambda you'll see *OnEmptyBatchAsync* logged once or twice.
+
+The following two screenshots prove that not not all messages appear in the log groups. Alsp there there are no new Log Streams
+
+![AWS Logging .NET](https://raw.githubusercontent.com/adrianiftode/SerilogSinksCloudWatchIssue/master/_images/serilog.aws.sink.JPG)
+![Serilog Sink for AWS CloudWatch](https://raw.githubusercontent.com/adrianiftode/SerilogSinksCloudWatchIssue/master/_images/serilog.cimpress.sink.JPG)
+![Serilog Sink for AWS CloudWatch Custom Sink](https://raw.githubusercontent.com/adrianiftode/SerilogSinksCloudWatchIssue/master/_images/serilog.cimpress.custom.sink.JPG)
 
 
 ## Here are some steps to follow from Visual Studio:
