@@ -1,10 +1,10 @@
-# Replicates which might be an issue with Serilog CloudWatch sinks on an AWS Lambda
+# Replicates which might be an issue with Serilog CloudWatch sinks on AWS Lambda
 
 This project replicates a Serilog issue that happens while running on AWS Lambda
 
-Not all logging messages everything are sent to CloudWatch, there are always some remaining messages in a pending queue.
+Not all logging messages are sent to CloudWatch, there are always some remaining messages in a pending queue.
 
-Once you publish this to AWS Lambda do several requests on it, usualy more than dozens
+Once you publish this to AWS Lambda do several requests on it, something like this
 
 ```
 async void Main()
@@ -20,20 +20,20 @@ async void Main()
 }
 ```
 
-Once the lambda is called 100 times we will see that not all messages are logged in none of the LogGroups we've set. The messages are logged in order, as expected, but there are always some of them that remain in pending.
+We will see that not all messages are logged in none of the LogGroups we've set. The messages are logged in order, as expected, but there are always some of them that remain in pending.
 Once a new Lambda request is made, then those remaining messages are processed, otherwise they are never sent to CloudWatch.
 
 This issues happens with both most used sinks
 
-| Sink   |      Configurd LogGroup Name      |
-|----------|:-------------:|------:|
+| Sink | Configured LogGroup Name |
+|----------|-------------|
 | [AWS Logging .NET](https://github.com/aws/aws-logging-dotnet) |  Serilog.AWS |
 | [Serilog Sink for AWS CloudWatch](https://github.com/Cimpress-MCP/serilog-sinks-awscloudwatch) |  Serilog.Cimpress |
 | [Serilog Sink for AWS CloudWatch - Custom Sink](https://github.com/Cimpress-MCP/serilog-sinks-awscloudwatch) |  Serilog.Cimpress.Custom |
 
 It looks like what goes in background processing is not executed.
 
-The following code proves that PeriodicBatching is not working on AWS Lambda, the SelfLog does not log at every second so this might explain why some messages remain in a pending queue
+The following code proves that *PeriodicBatching* is not working on AWS Lambda, the SelfLog does not log at every second so this might explain why some messages are not sent.
 
 ```
  internal class CloudWatchLogSinkWithLogging : CloudWatchLogSink
